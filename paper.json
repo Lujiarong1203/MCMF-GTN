@@ -1,0 +1,17 @@
+{
+  "dataset": "elliptic",
+  "seed": 42,
+  "seeds": [42, 123, 456, 789, 1024],
+  "epochs": 100,
+  "batch_size": 128,
+  "lr": 0.0001,
+  "lr_step": 10,
+  "lr_gamma": 0.1,
+  "gt_layers": 3,
+  "gcn_hidden": [128, 64, 32],
+  "dropout": 0.5,
+  "embed_dim": 128,
+  "alpha": 0.6,
+  "profile": "paper",
+  "acknowledged_defaults": false
+}

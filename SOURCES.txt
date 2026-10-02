@@ -1,0 +1,53 @@
+DATA SOURCES
+
+Raw datasets, checkpoints and historical experiment outputs are not included.
+Download or request the matching release from its original provider and retain
+the provider's usage terms. Do not substitute a different graph release solely
+because it has a similar name. Source data are read without modification.
+
+1. Elliptic
+Provider: Elliptic.
+Official dataset: https://www.kaggle.com/datasets/ellipticco/elliptic-data-set
+Source study: Weber et al., Anti-Money Laundering in Bitcoin: Experimenting
+with Graph Convolutional Networks for Financial Forensics (2019).
+https://arxiv.org/abs/1908.02591
+Native files: elliptic_txs_features.csv, elliptic_txs_edgelist.csv,
+elliptic_txs_classes.csv. Features contain the time-slice value but not txId.
+Internal model dimensions: 166 static features and two edge channels.
+
+2. ETX Network
+Source study: Wu et al., Who Are the Phishers? Phishing Scam Detection on
+Ethereum via Network Embedding, IEEE Transactions on Systems, Man, and
+Cybernetics: Systems, 52(2), 1156-1166; online publication 2020.
+https://doi.org/10.1109/TSMC.2020.3016821
+https://arxiv.org/abs/1911.09259
+Obtain the corresponding labeled transaction-event graph from the original
+data provider/authors. This reference implementation does not assert that an
+arbitrary Ethereum download is the exact ETX release used in the study.
+Required event fields: source, target, timestamp and genuine transferred amount.
+Required node labels: licit=0, illicit=1, unknown=-1. Parallel events are retained.
+Supported input: canonical CSVs or an explicitly trusted directed NetworkX
+pickle with label/phishing node fields and timestamp/time, amount/value edges.
+Internal model dimensions: 14 split-local statistics and three edge channels.
+
+3. RD Bitcoin / RD-Elliptic
+Source study: Wang, Tsai and Du, RMGANets: reinforcement learning-enhanced
+multi-relational attention graph-aware network for anti-money laundering
+detection, Complex & Intelligent Systems (online 2024).
+https://doi.org/10.1007/s40747-024-01615-9
+https://link.springer.com/article/10.1007/s40747-024-01615-9
+The source study's Data availability statement offers data from the
+corresponding author upon reasonable request. Obtain and verify the augmented
+Elliptic feature release, its masking/noise variant, edge list and label file.
+The model uses 185 feature columns after excluding the identifier. Do not
+fabricate the 19 augmented attributes by zero-padding Elliptic features.
+Pass an explicit feature-file path when a directory contains multiple variants.
+Internal model dimensions: 185 static features and two edge channels.
+
+Canonical interchange schema
+nodes.csv: node_id,label,timestamp,f0,...,f(D-1)
+edges.csv: source,target,timestamp[,amount]
+D is 166 (Elliptic), 14 (ETX) or 185 (RD). Labels are 0,1,-1.
+ETX statistics are recomputed within each temporal subgraph. Bitcoin's static
+features are the provided benchmark features; their creator's aggregation
+scope is not changed by this reader. All timestamps must be finite numbers.
