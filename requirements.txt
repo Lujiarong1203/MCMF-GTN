@@ -1,0 +1,11 @@
+torch>=2.0.0
+torch-geometric>=2.3
+networkx>=2.8
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+scipy>=1.10
+tqdm>=4.65
+
+# optional, for the TGTOD baseline
+# torch-sparse / torch-scatter (install with -f https://data.pyg.org/whl/torch-<version>.html)
